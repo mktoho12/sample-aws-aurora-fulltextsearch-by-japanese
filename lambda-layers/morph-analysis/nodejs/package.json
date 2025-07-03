@@ -1,0 +1,9 @@
+{
+  "name": "morph-analysis-layer",
+  "version": "1.0.0",
+  "description": "Japanese morphological analysis libraries for Lambda",
+  "dependencies": {
+    "kuromoji": "^0.1.2",
+    "tiny-segmenter": "^0.2.0"
+  }
+}

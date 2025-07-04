@@ -2,13 +2,19 @@
   "name": "sample-aws-aurora-fulltextsearch-by-japanese",
   "version": "0.1.0",
   "bin": {
-    "sample-aws-aurora-fulltextsearch-by-japanese": "bin/sample-aws-aurora-fulltextsearch-by-japanese.js"
+    "sample-aws-aurora-fulltextsearch-by-japanese": "dist/bin/sample-aws-aurora-fulltextsearch-by-japanese.js"
   },
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist/",
+    "rebuild": "npm run clean && npm run build",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "cdk:deploy": "node scripts/cdk-with-sso.js deploy",
+    "cdk:destroy": "node scripts/cdk-with-sso.js destroy",
+    "cdk:diff": "node scripts/cdk-with-sso.js diff",
+    "cdk:synth": "node scripts/cdk-with-sso.js synth"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

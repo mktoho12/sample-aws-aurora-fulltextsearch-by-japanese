@@ -24,7 +24,7 @@ export interface AppParameter {
 
 export const appParameter: AppParameter = {
   env: {
-    account: process.env.CDK_DEFAULT_ACCOUNT,
+    account: process.env.CDK_DEFAULT_ACCOUNT || 'ACCOUNT_ID_HERE',
     region: process.env.CDK_DEFAULT_REGION || 'ap-northeast-1',
   },
   

@@ -70,8 +70,6 @@ export class LambdaStack extends cdk.Stack {
       description: 'API for Japanese fulltext search demo',
       deployOptions: {
         stageName: 'dev',
-        loggingLevel: apigateway.MethodLoggingLevel.INFO,
-        dataTraceEnabled: true,
       },
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,

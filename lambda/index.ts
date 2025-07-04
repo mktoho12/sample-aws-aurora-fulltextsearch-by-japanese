@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { Client } from 'pg';
 import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
 import * as kuromoji from 'kuromoji';
-import * as TinySegmenter from 'tiny-segmenter';
+import TinySegmenter from 'tiny-segmenter';
 
 // Secrets Managerクライアント
 const secretsClient = new SecretsManagerClient({ region: process.env.AWS_REGION });
@@ -24,7 +24,7 @@ async function initializeKuromoji(): Promise<void> {
   if (tokenizer) return;
   
   return new Promise((resolve, reject) => {
-    kuromoji.builder({ dicPath: '/opt/nodejs/dict' }).build((err, _tokenizer) => {
+    kuromoji.builder({ dicPath: '/opt/nodejs/dict' }).build((err: Error | null, _tokenizer: any) => {
       if (err) {
         console.error('Kuromoji initialization failed:', err);
         reject(err);

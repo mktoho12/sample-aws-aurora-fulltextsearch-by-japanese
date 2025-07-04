@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/sample-aws-aurora-fulltextsearch-by-japanese.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/sample-aws-aurora-fulltextsearch-by-japanese.ts --profile default",
   "watch": {
     "include": [
       "**"

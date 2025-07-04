@@ -1,8 +1,33 @@
 *.js
 !jest.config.js
+!scripts/cdk-with-sso.js
 *.d.ts
 node_modules
+
+# Build output
+dist/
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# AWS credentials - NEVER commit these
+.aws/credentials
+.aws/config
+aws-exports.js
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log

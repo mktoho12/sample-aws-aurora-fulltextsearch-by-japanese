@@ -49,8 +49,6 @@ export class RdsStack extends cdk.Stack {
         'shared_preload_libraries': 'pg_stat_statements,pgaudit',
         'log_statement': 'all',
         'log_min_duration_statement': '1000',
-        // 標準のPostgreSQL全文検索設定
-        'default_text_search_config': 'pg_catalog.simple',
       },
     });
 
@@ -98,7 +96,7 @@ export class RdsStack extends cdk.Stack {
       iamAuth: true,
       maxConnectionsPercent: 100,
       maxIdleConnectionsPercent: 50,
-      connectionBorrowTimeout: cdk.Duration.seconds(30),
+      borrowTimeout: cdk.Duration.seconds(30),
       initQuery: 'SET search_path TO public',
     });
 

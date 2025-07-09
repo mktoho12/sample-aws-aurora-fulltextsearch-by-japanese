@@ -193,6 +193,9 @@ export class SampleAwsAuroraFulltextsearchByJapaneseStack extends cdk.Stack {
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowHeaders: ['Content-Type', 'Authorization'],
       },
+      deployOptions: {
+        stageName: 'api',
+      },
     });
 
     // Documents エンドポイント

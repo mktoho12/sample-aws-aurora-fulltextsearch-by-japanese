@@ -97,6 +97,7 @@ export class SampleAwsAuroraFulltextsearchByJapaneseStackDev extends cdk.Stack {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PUBLIC, // パブリックサブネットで実行
       },
+      allowPublicSubnet: true, // パブリックサブネットでの実行を許可
       securityGroups: [lambdaSecurityGroup],
       environment: {
         DB_HOST: auroraCluster.clusterEndpoint.hostname,
@@ -120,6 +121,9 @@ export class SampleAwsAuroraFulltextsearchByJapaneseStackDev extends cdk.Stack {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowHeaders: ['Content-Type', 'Authorization'],
+      },
+      deployOptions: {
+        stageName: 'api',
       },
     });
 

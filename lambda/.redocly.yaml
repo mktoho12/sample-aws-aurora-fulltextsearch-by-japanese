@@ -1,0 +1,10 @@
+apis:
+  main:
+    root: openapi/openapi.yaml
+
+extends:
+  - recommended
+
+rules:
+  no-unresolved-refs: error
+  no-unused-components: warn

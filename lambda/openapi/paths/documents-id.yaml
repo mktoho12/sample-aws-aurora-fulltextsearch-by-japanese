@@ -1,0 +1,79 @@
+get:
+  summary: ドキュメントを取得
+  description: 指定されたIDのドキュメントを取得します
+  tags:
+    - Documents
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ドキュメントID
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: ドキュメント
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/document-with-category.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+put:
+  summary: ドキュメントを更新
+  description: 指定されたIDのドキュメントを更新します
+  tags:
+    - Documents
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ドキュメントID
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/document-update.yaml'
+  responses:
+    '200':
+      description: 更新されたドキュメント
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/document-with-category.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+delete:
+  summary: ドキュメントを削除
+  description: 指定されたIDのドキュメントを削除します
+  tags:
+    - Documents
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ドキュメントID
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: 削除成功
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'

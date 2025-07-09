@@ -1,0 +1,42 @@
+get:
+  summary: カテゴリ一覧を取得
+  description: カテゴリの一覧を取得します
+  tags:
+    - Categories
+  responses:
+    '200':
+      description: カテゴリ一覧
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              categories:
+                type: array
+                items:
+                  $ref: '../schemas/category.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+post:
+  summary: カテゴリを作成
+  description: 新しいカテゴリを作成します
+  tags:
+    - Categories
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/category-create.yaml'
+  responses:
+    '201':
+      description: 作成されたカテゴリ
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/category.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'

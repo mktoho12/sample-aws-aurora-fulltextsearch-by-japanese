@@ -1,0 +1,28 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: ドキュメントID
+  name:
+    type: string
+    description: ドキュメント名
+  title:
+    type: string
+    description: タイトル
+  content:
+    type: string
+    description: 内容
+  category_id:
+    type: integer
+    nullable: true
+    description: カテゴリID
+  created_at:
+    type: string
+    format: date-time
+    description: 作成日時
+required:
+  - id
+  - name
+  - title
+  - content
+  - created_at

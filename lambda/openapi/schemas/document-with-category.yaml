@@ -1,0 +1,7 @@
+allOf:
+  - $ref: './document.yaml'
+  - type: object
+    properties:
+      category:
+        $ref: './category.yaml'
+        nullable: true

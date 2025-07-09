@@ -1,0 +1,9 @@
+description: リクエストが不正です
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/error.yaml'
+    example:
+      statusCode: 400
+      error: Bad Request
+      message: name は必須項目です

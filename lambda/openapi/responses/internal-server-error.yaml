@@ -1,0 +1,9 @@
+description: サーバー内部エラー
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/error.yaml'
+    example:
+      statusCode: 500
+      error: Internal Server Error
+      message: Internal server error

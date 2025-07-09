@@ -1,0 +1,501 @@
+openapi: 3.0.0
+info:
+  title: 日本語全文検索API
+  description: AWS Aurora PostgreSQLを使用した日本語全文検索機能を提供するAPI
+  version: 1.0.0
+  
+servers:
+  - url: https://api.example.com
+    description: Production server
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /documents/search:
+    get:
+      summary: ドキュメントを全文検索
+      description: 指定されたクエリでドキュメントを全文検索します
+      tags:
+        - Documents
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: 検索クエリ
+          schema:
+            type: string
+            example: TypeScript
+      responses:
+        '200':
+          description: 検索結果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query:
+                    type: string
+                    description: 検索クエリ
+                  count:
+                    type: integer
+                    description: 検索結果の件数
+                  documents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentWithCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /documents:
+    get:
+      summary: ドキュメント一覧を取得
+      description: ドキュメントの一覧を取得します
+      tags:
+        - Documents
+      parameters:
+        - name: limit
+          in: query
+          description: 取得件数の上限
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          description: 取得開始位置
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: ドキュメント一覧
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: 総件数
+                  limit:
+                    type: integer
+                    description: 取得件数の上限
+                  offset:
+                    type: integer
+                    description: 取得開始位置
+                  documents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentWithCategory'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      summary: ドキュメントを作成
+      description: 新しいドキュメントを作成します
+      tags:
+        - Documents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentCreate'
+      responses:
+        '201':
+          description: 作成されたドキュメント
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /documents/{id}:
+    get:
+      summary: ドキュメントを取得
+      description: 指定されたIDのドキュメントを取得します
+      tags:
+        - Documents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ドキュメントID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ドキュメント
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    put:
+      summary: ドキュメントを更新
+      description: 指定されたIDのドキュメントを更新します
+      tags:
+        - Documents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ドキュメントID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentUpdate'
+      responses:
+        '200':
+          description: 更新されたドキュメント
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      summary: ドキュメントを削除
+      description: 指定されたIDのドキュメントを削除します
+      tags:
+        - Documents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ドキュメントID
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: 削除成功
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /categories:
+    get:
+      summary: カテゴリ一覧を取得
+      description: カテゴリの一覧を取得します
+      tags:
+        - Categories
+      responses:
+        '200':
+          description: カテゴリ一覧
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      summary: カテゴリを作成
+      description: 新しいカテゴリを作成します
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreate'
+      responses:
+        '201':
+          description: 作成されたカテゴリ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /categories/{id}:
+    get:
+      summary: カテゴリを取得
+      description: 指定されたIDのカテゴリを取得します
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: カテゴリID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: カテゴリ（関連ドキュメント含む）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryWithDocuments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    put:
+      summary: カテゴリを更新
+      description: 指定されたIDのカテゴリを更新します
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: カテゴリID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreate'
+      responses:
+        '200':
+          description: 更新されたカテゴリ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      summary: カテゴリを削除
+      description: 指定されたIDのカテゴリを削除します
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: カテゴリID
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: 削除成功
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: カテゴリID
+        name:
+          type: string
+          description: カテゴリ名
+      required:
+        - id
+        - name
+    
+    CategoryWithDocuments:
+      allOf:
+        - $ref: '#/components/schemas/Category'
+        - type: object
+          properties:
+            documents:
+              type: array
+              items:
+                $ref: '#/components/schemas/Document'
+    
+    CategoryCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: カテゴリ名
+          minLength: 1
+          maxLength: 255
+      required:
+        - name
+    
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ドキュメントID
+        name:
+          type: string
+          description: ドキュメント名
+        title:
+          type: string
+          description: タイトル
+        content:
+          type: string
+          description: 内容
+        category_id:
+          type: integer
+          nullable: true
+          description: カテゴリID
+        created_at:
+          type: string
+          format: date-time
+          description: 作成日時
+      required:
+        - id
+        - name
+        - title
+        - content
+        - created_at
+    
+    DocumentWithCategory:
+      allOf:
+        - $ref: '#/components/schemas/Document'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/Category'
+              nullable: true
+    
+    DocumentCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ドキュメント名
+          minLength: 1
+          maxLength: 255
+        title:
+          type: string
+          description: タイトル
+          minLength: 1
+        content:
+          type: string
+          description: 内容
+          minLength: 1
+        category_id:
+          type: integer
+          nullable: true
+          description: カテゴリID
+      required:
+        - name
+        - title
+        - content
+    
+    DocumentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ドキュメント名
+          minLength: 1
+          maxLength: 255
+        title:
+          type: string
+          description: タイトル
+          minLength: 1
+        content:
+          type: string
+          description: 内容
+          minLength: 1
+        category_id:
+          type: integer
+          nullable: true
+          description: カテゴリID
+    
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTPステータスコード
+        error:
+          type: string
+          description: エラー名
+        message:
+          type: string
+          description: エラーメッセージ
+      required:
+        - statusCode
+        - message
+
+  responses:
+    BadRequest:
+      description: リクエストが不正です
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            statusCode: 400
+            error: Bad Request
+            message: name は必須項目です
+    
+    NotFound:
+      description: リソースが見つかりません
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            statusCode: 404
+            error: Not Found
+            message: ドキュメントが見つかりません
+    
+    InternalServerError:
+      description: サーバー内部エラー
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            statusCode: 500
+            error: Internal Server Error
+            message: Internal server error
+
+tags:
+  - name: Documents
+    description: ドキュメント関連のAPI
+  - name: Categories
+    description: カテゴリ関連のAPI

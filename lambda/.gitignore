@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+.env
+*.log
+
+# Generated OpenAPI files
+openapi-bundled.yaml
+openapi-docs.html

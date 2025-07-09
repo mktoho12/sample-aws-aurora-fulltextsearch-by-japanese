@@ -1,0 +1,9 @@
+description: リソースが見つかりません
+content:
+  application/json:
+    schema:
+      $ref: '../schemas/error.yaml'
+    example:
+      statusCode: 404
+      error: Not Found
+      message: ドキュメントが見つかりません

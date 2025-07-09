@@ -1,0 +1,8 @@
+allOf:
+  - $ref: './category.yaml'
+  - type: object
+    properties:
+      documents:
+        type: array
+        items:
+          $ref: './document.yaml'

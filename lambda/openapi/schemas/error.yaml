@@ -1,0 +1,14 @@
+type: object
+properties:
+  statusCode:
+    type: integer
+    description: HTTPステータスコード
+  error:
+    type: string
+    description: エラー名
+  message:
+    type: string
+    description: エラーメッセージ
+required:
+  - statusCode
+  - message

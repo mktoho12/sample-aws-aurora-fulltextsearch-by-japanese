@@ -6,6 +6,11 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^../../utils/middy$': '<rootDir>/test/__mocks__/createHandler.js',
+    '^../database/connection$': '<rootDir>/test/__mocks__/database/connection.js',
+  },
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/migrations/**',
@@ -14,8 +19,5 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   moduleFileExtensions: ['ts', 'js', 'json'],
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
   testTimeout: 30000, // TypeORMのデータベース接続のため
 };

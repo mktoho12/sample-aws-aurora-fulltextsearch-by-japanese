@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: カテゴリID
+  name:
+    type: string
+    description: カテゴリ名
+required:
+  - id
+  - name

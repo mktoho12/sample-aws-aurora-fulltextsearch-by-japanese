@@ -1,0 +1,79 @@
+get:
+  summary: カテゴリを取得
+  description: 指定されたIDのカテゴリを取得します
+  tags:
+    - Categories
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: カテゴリID
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: カテゴリ（関連ドキュメント含む）
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/category-with-documents.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+put:
+  summary: カテゴリを更新
+  description: 指定されたIDのカテゴリを更新します
+  tags:
+    - Categories
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: カテゴリID
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/category-create.yaml'
+  responses:
+    '200':
+      description: 更新されたカテゴリ
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/category.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+delete:
+  summary: カテゴリを削除
+  description: 指定されたIDのカテゴリを削除します
+  tags:
+    - Categories
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: カテゴリID
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: 削除成功
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '404':
+      $ref: '../responses/not-found.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'

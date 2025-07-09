@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: 日本語全文検索API
+  description: AWS Aurora PostgreSQLを使用した日本語全文検索機能を提供するAPI
+  version: 1.0.0
+  
+servers:
+  - url: https://api.example.com
+    description: Production server
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  # Document paths
+  /documents:
+    $ref: './paths/documents.yaml'
+  /documents/{id}:
+    $ref: './paths/documents-id.yaml'
+  
+  # Category paths
+  /categories:
+    $ref: './paths/categories.yaml'
+  /categories/{id}:
+    $ref: './paths/categories-id.yaml'
+
+components:
+  schemas:
+    # Common schemas
+    Error:
+      $ref: './schemas/error.yaml'
+    
+    # Category schemas
+    Category:
+      $ref: './schemas/category.yaml'
+    CategoryWithDocuments:
+      $ref: './schemas/category-with-documents.yaml'
+    CategoryCreate:
+      $ref: './schemas/category-create.yaml'
+    
+    # Document schemas
+    Document:
+      $ref: './schemas/document.yaml'
+    DocumentWithCategory:
+      $ref: './schemas/document-with-category.yaml'
+    DocumentCreate:
+      $ref: './schemas/document-create.yaml'
+    DocumentUpdate:
+      $ref: './schemas/document-update.yaml'
+
+  responses:
+    BadRequest:
+      $ref: './responses/bad-request.yaml'
+    NotFound:
+      $ref: './responses/not-found.yaml'
+    InternalServerError:
+      $ref: './responses/internal-server-error.yaml'
+
+tags:
+  - name: Documents
+    description: ドキュメント関連のAPI
+  - name: Categories
+    description: カテゴリ関連のAPI

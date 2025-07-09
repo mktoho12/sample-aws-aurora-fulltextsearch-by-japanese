@@ -1,0 +1,9 @@
+type: object
+properties:
+  name:
+    type: string
+    description: カテゴリ名
+    minLength: 1
+    maxLength: 255
+required:
+  - name

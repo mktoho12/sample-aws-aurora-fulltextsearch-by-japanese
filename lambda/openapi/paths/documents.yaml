@@ -1,0 +1,84 @@
+get:
+  summary: ドキュメント一覧を取得または検索
+  description: |
+    クエリパラメータ `q` が指定された場合は全文検索を実行し、
+    指定されない場合はドキュメントの一覧を返します。
+  tags:
+    - Documents
+  parameters:
+    - name: q
+      in: query
+      description: 検索クエリ（指定時は全文検索を実行）
+      schema:
+        type: string
+        example: TypeScript
+    - name: limit
+      in: query
+      description: 取得件数の上限（一覧取得時のみ有効）
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 100
+    - name: offset
+      in: query
+      description: 取得開始位置（一覧取得時のみ有効）
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+  responses:
+    '200':
+      description: ドキュメント一覧または検索結果
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              query:
+                type: string
+                description: 検索クエリ（検索時のみ）
+                nullable: true
+              total:
+                type: integer
+                description: 総件数
+              limit:
+                type: integer
+                description: 取得件数の上限
+              offset:
+                type: integer
+                description: 取得開始位置
+              documents:
+                type: array
+                items:
+                  $ref: '../schemas/document-with-category.yaml'
+            required:
+              - total
+              - limit
+              - offset
+              - documents
+    '500':
+      $ref: '../responses/internal-server-error.yaml'
+
+post:
+  summary: ドキュメントを作成
+  description: 新しいドキュメントを作成します
+  tags:
+    - Documents
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/document-create.yaml'
+  responses:
+    '201':
+      description: 作成されたドキュメント
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/document-with-category.yaml'
+    '400':
+      $ref: '../responses/bad-request.yaml'
+    '500':
+      $ref: '../responses/internal-server-error.yaml'

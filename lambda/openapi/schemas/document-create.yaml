@@ -1,0 +1,23 @@
+type: object
+properties:
+  name:
+    type: string
+    description: ドキュメント名
+    minLength: 1
+    maxLength: 255
+  title:
+    type: string
+    description: タイトル
+    minLength: 1
+  content:
+    type: string
+    description: 内容
+    minLength: 1
+  category_id:
+    type: integer
+    nullable: true
+    description: カテゴリID
+required:
+  - name
+  - title
+  - content

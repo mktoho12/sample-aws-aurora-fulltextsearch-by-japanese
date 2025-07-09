@@ -23,6 +23,7 @@
     "@middy/http-error-handler": "^6.3.2",
     "@middy/http-json-body-parser": "^6.3.2",
     "@types/http-errors": "^2.0.5",
+    "aws-sdk": "^2.1692.0",
     "http-errors": "^2.0.0",
     "kuromoji": "^0.1.2",
     "pg": "^8.16.3",

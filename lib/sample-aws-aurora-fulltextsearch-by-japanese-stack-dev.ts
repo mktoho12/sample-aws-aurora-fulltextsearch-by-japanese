@@ -92,7 +92,7 @@ export class SampleAwsAuroraFulltextsearchByJapaneseStackDev extends cdk.Stack {
     const apiFunction = new lambda.Function(this, 'ApiFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: 'src/index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda/dist')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda/lambda-dist')),
       vpc,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PUBLIC, // パブリックサブネットで実行

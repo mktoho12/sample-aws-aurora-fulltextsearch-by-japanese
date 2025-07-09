@@ -4,7 +4,7 @@ import { Category } from '../entities/Category';
 import { Document } from '../entities/Document';
 import { DocumentSubscriber } from '../subscribers/DocumentSubscriber';
 import { CategorySubscriber } from '../subscribers/CategorySubscriber';
-import * as AWS from 'aws-sdk';
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
 
 let dataSource: DataSource | null = null;
 
@@ -18,10 +18,11 @@ interface SecretData {
 }
 
 async function getSecretValue(secretArn: string): Promise<SecretData> {
-  const secretsManager = new AWS.SecretsManager();
+  const secretsManager = new SecretsManagerClient({ region: process.env.AWS_REGION });
   
   try {
-    const data = await secretsManager.getSecretValue({ SecretId: secretArn }).promise();
+    const command = new GetSecretValueCommand({ SecretId: secretArn });
+    const data = await secretsManager.send(command);
     if (data.SecretString) {
       return JSON.parse(data.SecretString);
     }

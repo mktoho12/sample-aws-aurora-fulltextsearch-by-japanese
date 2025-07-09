@@ -30,7 +30,7 @@ const dbConnectionMiddleware = (): middy.MiddlewareObj<APIGatewayProxyEvent, API
 export const createHandler = (
   handler: (event: APIGatewayProxyEvent, context: HandlerContext) => Promise<APIGatewayProxyResult>
 ) => {
-  return middy(handler as any)
+  return middy<APIGatewayProxyEvent, APIGatewayProxyResult>(handler as any)
     .use(httpJsonBodyParser())
     .use(cors())
     .use(dbConnectionMiddleware())

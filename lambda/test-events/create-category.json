@@ -1,0 +1,9 @@
+{
+  "httpMethod": "POST",
+  "resource": "/categories",
+  "path": "/categories",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"name\": \"プログラミング\", \"description\": \"プログラミングに関するドキュメント\"}"
+}

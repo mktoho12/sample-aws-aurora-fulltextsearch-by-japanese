@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Local testing for Japanese fulltext search Lambda
+
+Resources:
+  FulltextSearchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-dist/
+      Handler: wrapper.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          NODE_ENV: development
+          DB_HOST: host.docker.internal
+          DB_PORT: "5432"
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: fulltextsearch
+          DB_PROXY_ENDPOINT: localhost
+          DB_SECRET_ARN: arn:aws:secretsmanager:ap-northeast-1:123456789012:secret:dummy
+          AWS_REGION: ap-northeast-1
+      Events:
+        CreateCategory:
+          Type: Api
+          Properties:
+            Path: /categories
+            Method: POST
+        ListCategories:
+          Type: Api
+          Properties:
+            Path: /categories
+            Method: GET
+        GetCategory:
+          Type: Api
+          Properties:
+            Path: /categories/{id}
+            Method: GET
+        UpdateCategory:
+          Type: Api
+          Properties:
+            Path: /categories/{id}
+            Method: PUT
+        DeleteCategory:
+          Type: Api
+          Properties:
+            Path: /categories/{id}
+            Method: DELETE
+        CreateDocument:
+          Type: Api
+          Properties:
+            Path: /documents
+            Method: POST
+        ListDocuments:
+          Type: Api
+          Properties:
+            Path: /documents
+            Method: GET
+        GetDocument:
+          Type: Api
+          Properties:
+            Path: /documents/{id}
+            Method: GET
+        UpdateDocument:
+          Type: Api
+          Properties:
+            Path: /documents/{id}
+            Method: PUT
+        DeleteDocument:
+          Type: Api
+          Properties:
+            Path: /documents/{id}
+            Method: DELETE

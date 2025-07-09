@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { DataSource } from 'typeorm';
 import { Document } from '../../src/entities/Document';
@@ -67,9 +68,9 @@ export const createMockContext = (): Context => {
     logGroupName: '/aws/lambda/test-function',
     logStreamName: '2024/01/01/[$LATEST]test-stream',
     getRemainingTimeInMillis: () => 30000,
-    done: jest.fn(),
-    fail: jest.fn(),
-    succeed: jest.fn(),
+    done: vi.fn(),
+    fail: vi.fn(),
+    succeed: vi.fn(),
   };
 };
 

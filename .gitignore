@@ -6,6 +6,8 @@ node_modules
 
 # Build output
 dist/
+lambda/lambda-dist/
+lambda/lambda-dist.zip
 
 # CDK asset staging directory
 .cdk.staging

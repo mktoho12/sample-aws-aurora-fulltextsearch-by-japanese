@@ -19,9 +19,12 @@ export class Document {
   @JoinColumn({ name: 'category_id' })
   category!: Category;
 
-  @Column({ name: 'category_id' })
-  category_id!: number;
+  @Column({ name: 'category_id', nullable: true })
+  category_id?: number;
 
   @CreateDateColumn()
   created_at!: Date;
+
+  @Column({ type: 'tsvector', nullable: true, select: false })
+  search_vector?: any;
 }

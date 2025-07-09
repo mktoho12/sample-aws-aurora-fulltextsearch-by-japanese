@@ -1,8 +1,37 @@
-# Welcome to your CDK TypeScript project
+# AWS Aurora PostgreSQL 日本語全文検索サンプル
 
-This is a blank project for CDK development with TypeScript.
+AWS Aurora PostgreSQLで日本語全文検索を実装するサンプルプロジェクトです。
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## 機能
+
+- Aurora PostgreSQLでの日本語全文検索
+- TypeORMを使用したデータベース操作
+- API Gateway + Lambda による REST API
+- 開発環境と本番環境の分離
+
+## デプロイ
+
+### AWS SSOを使用している場合
+
+AWS SSOでログインしている場合は、付属のスクリプトを使用してください：
+
+```bash
+# AWS SSOでログイン
+aws sso login --profile your-profile
+
+# デプロイ（SSOの認証情報を自動的にエクスポート）
+./scripts/cdk-sso deploy --require-approval never
+
+# その他のCDKコマンドも同様に使用可能
+./scripts/cdk-sso diff
+./scripts/cdk-sso destroy
+```
+
+### 通常のAWS認証の場合
+
+```bash
+npx cdk deploy --require-approval never
+```
 
 ## Useful commands
 
